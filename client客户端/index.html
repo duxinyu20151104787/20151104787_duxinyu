@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
+    <meta name="viewport" content="width=400; user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="jb/jquery.mobile.flatui.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="jb/theme-classic.css"/>-->
+    <script type="text/javascript" src="jb/jquery.min.js"></script>
+    <script type="text/javascript" src="jb/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="jslib/jqueryform.js"></script>
+    <script type="text/javascript" src="jslib/hammer.js"></script>
+    <script type="text/javascript" src="js/commontools.js"></script>
+    <script type="text/javascript" src="js/jbtool.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/user.js"></script>
+    <script type="text/javascript" src="js/yewu.js"></script>
+    <!--<script type="text/javascript" src="js/records.js"></script>-->
+    <title>MyApp</title>
+
+</head>
+<body>
+
+<!--用户模块---------------------------------------------------------------------------------->
+<div data-role="page" data-control-title="Login" id="loginpage" data-theme="d">
+    <div data-role="header" data-theme="d" data-position="fixed">
+        <h1 class="ui-title">
+            用户登陆
+        </h1>
+    </div>
+    <div role="main" class="ui-content">
+        <div style="text-align: center;">
+            <img src="images/biu.jpg" style="width: 70%;" alt="">
+        </div>
+        <form id="loginform" name="loginform">
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    手机号:
+                </label>
+                <input id="lusername" name="username" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    密码:
+                </label>
+                <input id="lpasswd" name="passwd" placeholder="" value="" type="password">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label for="remember">
+                    自动登陆：
+                </label>
+                <select name="remember" id="remember" data-theme="" data-role="slider">
+                    <option value="0">
+                        Off
+                    </option>
+                    <option selected="selected" value="1">
+                        On
+                    </option>
+                </select>
+            </div>
+        </form>
+        <a href="#" onclick="login();" class="ui-btn ui-btn-c">
+            登陆
+        </a>
+        <a href="#" onclick="toRegister();" class="ui-btn ui-btn-c">
+            注册
+        </a>
+
+    </div>
+</div>
+
+<div data-role="page" data-theme="d" data-control-title="Register" id="registerpage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            快速注册
+        </h1>
+    </div>
+    <div role="main" class="ui-content">
+        <form id="registerform">
+            <!--<div  class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    头像：
+                </label>
+                <img  id="rmyImage1" src="" style="width: 50%;" >
+                <a href="#" onclick="getFilePic(0,'rmyImage1');" class="ui-btn ui-btn-g">
+                    选择图片
+                </a>
+                <a href="#" onclick="getFilePic(1,'rmyImage1');" class="ui-btn ui-btn-d">
+                    拍照
+                </a>
+            </div>-->
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    手机号:
+                </label>
+                <input name="username" placeholder="必填" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    密码:
+                </label>
+                <input name="passwd" placeholder="必填" value="" type="password">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    密码重复:
+                </label>
+                <input name="passwd2" placeholder="必填" value="" type="password">
+            </div>
+            <!--<div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    电话:
+                </label>
+                <input name="tel" placeholder="必填" value="" type="tel">
+            </div>-->
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    姓名:
+                </label>
+                <input name="address" placeholder="必填" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    QQ:
+                </label>
+                <input name="qq" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    微信:
+                </label>
+                <input name="wechat" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    邮箱:
+                </label>
+                <input name="email" placeholder="" value="" type="email">
+            </div>
+            <div class="ui-field-contain" data-controltype="dateinput">
+                <label>
+                    生日:
+                </label>
+                <input name="birth" placeholder="" value="" type="date">
+            </div>
+            <div class="ui-field-contain" data-controltype="selectmenu">
+                <label>
+                    性别:
+                </label>
+                <select name="sex">
+                    <option value="男">
+                        男
+                    </option>
+                    <option value="女">
+                        女
+                    </option>
+                </select>
+            </div>
+        </form>
+        <a href="#" onclick="register();" class="ui-btn ui-btn-c">提交</a>
+        <a href="#" onclick="toLogin();" class="ui-btn ui-btn-c">取消</a>
+    </div>
+</div>
+
+<div data-role="page" data-theme="d" data-control-title="Userinfo" id="userinfopage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            个人信息
+        </h1>
+        <a href="#" onclick="goback();" data-icon="back" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <form id="userform">
+            <input name="img" id="vimg" type="hidden">
+            <div id="gereninfo" class="ui-field-contain" data-controltype="textinput">
+                <label id="vusername">
+                    手机号:
+                </label>
+                <!--<label id="vjifen" style="color: red;">
+                    手机号:
+                </label>-->
+            </div>
+            <!--<div  class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    头像：
+                </label>
+                <img  id="rmyImage2" src="" style="width: 50%;" >
+                <a href="#" onclick="getFilePic(0,'rmyImage2');" class="ui-btn ui-btn-g">
+                    选择图片
+                </a>
+                <a href="#" onclick="getFilePic(1,'rmyImage2');" class="ui-btn ui-btn-d">
+                    拍照
+                </a>
+            </div>-->
+            <!--<div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    电话:
+                </label>
+                <input name="tel" id="vtel" placeholder="" value="" type="tel">
+            </div>-->
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    姓名:
+                </label>
+                <input id="vaddress" name="address" placeholder="必填" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    QQ:
+                </label>
+                <input name="qq" id="vqq" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    微信:
+                </label>
+                <input name="wechat" id="vwechat" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    邮箱:
+                </label>
+                <input name="email" id="vemail" placeholder="" value="" type="email">
+            </div>
+            <div class="ui-field-contain" data-controltype="dateinput">
+                <label>
+                    生日:
+                </label>
+                <input name="birth" id="vbirth" placeholder="" value="" type="date">
+            </div>
+            <div class="ui-field-contain" data-controltype="selectmenu">
+                <label>
+                    性别:
+                </label>
+                <select name="sex" id="vsex">
+                    <option value="男" selected="selected">
+                        男
+                    </option>
+                    <option value="女">
+                        女
+                    </option>
+                </select>
+            </div>
+        </form>
+
+        <a href="#" onclick="updateUserInfo();" class="ui-btn ui-btn-c">修改</a>
+        <a href="#" onclick="goback();" class="ui-btn ui-btn-c">取消</a>
+
+    </div>
+
+</div>
+
+
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="passwdpage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            修改密码
+        </h1>
+        <a href="#" onclick="goback();" data-icon="back" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-edit ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <form id="passwdform">
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label id="pusername">
+                    手机号:
+                </label>
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    原始密码:
+                </label>
+                <input name="oldpasswd" placeholder="" value="" type="password">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    新密码
+                </label>
+                <input name="passwd" placeholder="" value="" type="password">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    密码重复
+                </label>
+                <input name="passwd2" placeholder="" value="" type="password">
+            </div>
+        </form>
+        <a href="#" onclick="changePasswd();" class="ui-btn ui-btn-c">修改</a>
+        <a href="#" onclick="goback();" class="ui-btn ui-btn-c">取消</a>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="userpagepage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            开始投票问卷
+        </h1>
+
+
+    </div>
+    <div role="main" class="ui-content">
+        <input id="bianhao" type="text">
+        <button onclick="getUserByPasswd();">查询</button>
+        <div id="minfo">
+            <div>
+                <img src="" id="photo" style="width: 50%;" alt="">
+            </div>
+            <div>
+                <p id="xingming"></p>
+            </div>
+            <div>
+                <p id="xingbie"></p>
+            </div>
+            <div>
+                <p id="xueli"></p>
+            </div>
+            <div>
+                <p id="jingyan"></p>
+            </div>
+            <!--<div>
+                <p id="zhiwei"></p>
+            </div>-->
+            <div>
+                <p id="tel"></p>
+            </div>
+            <button onclick="toType();">开始投票问卷</button>
+        </div>
+
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="liuyanpage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            留言板
+        </h1>
+        <a href="#" onclick="goback();" data-icon="back" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-edit ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <ul id="replays2" data-role="listview" data-theme="c" data-inset="true">
+
+        </ul>
+        <textarea id="rnote2"></textarea>
+        <a href="#" onclick="addReplay();" class="ui-btn ui-btn-c">
+            评论
+        </a>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="chapterpage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            选择投票问卷
+        </h1>
+       <a href="#" onclick="toMyToupiao();" class="ui-btn ui-btn-right ui-icon-plus ui-btn-icon-left">
+            我的投票问卷
+        </a>
+        <a href="#popupMenu" data-rel="popup" data-theme="b" data-transition="pop"
+           class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-left">
+            选项
+        </a>
+
+        <div data-role="popup" id="popupMenu" data-theme="c">
+            <ul data-role="listview" data-theme="c" data-inset="true" style="min-width:210px;">
+                <li><a href="#" onclick="myinfo();">个人信息</a></li>
+                <li><a href="#" onclick="toChangePasswd();">修改密码</a></li>
+                <li><a href="#" onclick="toLiuyan();">留言</a></li>
+                <!--<li><a href="#" onclick="toShengciben();">我的收藏</a></li>-->
+                <!--<li><a href="#" onclick="toHistory();">历史记录</a></li>-->
+                <!--<li><a href="#" onclick="myinfo();">个人信息</a></li>
+                <li><a href="#" onclick="toChangePasswd();">修改密码</a></li>-->
+                <li><a href="#" onclick="logout();">注销</a></li>
+                <!--<li><a href="#" onclick="exitApp();">退出</a></li>-->
+            </ul>
+        </div>
+    </div>
+    <div role="main" class="ui-content">
+
+        <ul id="typelist2" data-role="listview" data-filter="true" data-filter-placeholder="输入关键..." data-theme="d" data-inset="true" >
+
+        </ul>
+
+
+        <!--<select name="type" id="type"></select>-->
+        <!--<select name="type2" id="type2"></select>-->
+        <!--<a href="#" onclick="toMain(null,null,1);" class="ui-btn ui-btn-c">学习</a>-->
+        <!--<a href="#" onclick="toBegin();" class="ui-btn ui-btn-c">开始投票问卷</a>-->
+    </div>
+</div>
+
+
+
+<div data-role="page" data-position="fixed" data-theme="d" id="mainpage">
+    <!--<div data-role="panel" id="chapterpanel" data-position="left" data-display="push">
+        <ul data-role="listview" data-theme="c">
+            <li><a href="javascript:toChapter(1);">chapter1</a></li>
+            <li><a href="javascript:toChapter(10);">chapter2</a></li>
+            <li><a href="javascript:toChapter(42);">chapter3</a></li>
+            <li><a href="javascript:toChapter(73);">chapter4</a></li>
+            <li><a href="javascript:toChapter(88);">chapter5</a></li>
+            <li><a href="javascript:toChapter(96);">chapter6</a></li>
+            <li><a href="javascript:toChapter(103);">chapter7</a></li>
+            <li><a href="javascript:toChapter(104);">chapter8</a></li>
+        </ul>
+    </div>-->
+    <div data-theme="d" data-role="header">
+        <h1 class="ui-title" id="atitle">
+
+        </h1>
+        <!--<a href="#popupMenu" data-rel="popup" data-theme="b" data-transition="pop"
+           class="ui-btn ui-btn-left ui-icon-bars ui-btn-icon-left">
+            选项
+        </a>
+
+        <div data-role="popup" id="popupMenu" data-theme="c">
+            <ul data-role="listview" data-theme="c" data-inset="true" style="min-width:210px;">
+
+                <li><a href="#chapterpage">选择投票问卷题</a></li>
+                &lt;!&ndash;<li><a href="#" onclick="toShengciben();">我的收藏</a></li>&ndash;&gt;
+                <li><a href="#" onclick="toHistory();">历史记录</a></li>
+                <li><a href="#" onclick="myinfo();">个人信息</a></li>
+                <li><a href="#" onclick="toChangePasswd();">修改密码</a></li>
+                <li><a href="#" onclick="logout();">注销</a></li>
+                <li><a href="#" onclick="exitApp();">退出</a></li>
+            </ul>
+        </div>-->
+        <!--<a href="#" onclick="addToShengci();" class="ui-btn ui-btn-right ui-icon-heart ui-btn-icon-left">
+            收藏
+        </a>-->
+    </div>
+    <div role="main" class="ui-content">
+        <fieldset>
+            <label style="color: red;" id="title"></label>
+            <label id="note"></label>
+        </fieldset>
+        <img src="" width="100%" id="tmpic" alt="">
+        <div id="xztctn" class="timuctn">
+
+            <fieldset data-role="controlgroup" id="rgroup" data-theme="c">
+                <input type="radio" name="answer" id="xztanswer1" value="a" checked="checked">
+                <label for="xztanswer1" id="opa"></label>
+                <input type="radio" name="answer" id="xztanswer2" value="b">
+                <label for="xztanswer2" id="opb"></label>
+                <input type="radio" name="answer" id="xztanswer3" value="c">
+                <label for="xztanswer3" id="opc"></label>
+                <input type="radio" name="answer" id="xztanswer4" value="d">
+                <label for="xztanswer4" id="opd"></label>
+                <input type="radio" name="answer" id="xztanswer5" value="d">
+                <label for="xztanswer5" id="ope"></label>
+                <input type="radio" name="answer" id="xztanswer6" value="d">
+                <label for="xztanswer6" id="opf"></label>
+                <input type="radio" name="answer" id="xztanswer7" value="d">
+                <label for="xztanswer7" id="opg"></label>
+            </fieldset>
+        </div>
+        <div id="dxctn" class="timuctn">
+            <fieldset data-role="controlgroup" id="rgroup12" data-theme="c">
+                <input type="checkbox" name="answer" id="dxtanswer1" value="a" checked="checked">
+                <label for="dxtanswer1" id="opa1"></label>
+                <input type="checkbox" name="answer" id="dxtanswer2" value="b">
+                <label for="dxtanswer2" id="opb1"></label>
+                <input type="checkbox" name="answer" id="dxtanswer3" value="c">
+                <label for="dxtanswer3" id="opc1"></label>
+                <input type="checkbox" name="answer" id="dxtanswer4" value="d">
+                <label for="dxtanswer4" id="opd1"></label>
+                <input type="checkbox" name="answer" id="dxtanswer5" value="e">
+                <label for="dxtanswer5" id="ope1"></label>
+                <input type="checkbox" name="answer" id="dxtanswer6" value="f">
+                <label for="dxtanswer6" id="opf1"></label>
+                <input type="checkbox" name="answer" id="dxtanswer7" value="g">
+                <label for="dxtanswer7" id="opg1"></label>
+            </fieldset>
+        </div>
+        <div id="pdtctn" class="timuctn">
+            <div>
+                <img id="tupianti"  style="width: 100%;" src="" alt="">
+            </div>
+            <fieldset data-role="controlgroup" id="rgroup2" >
+                <!--<input type="radio" name="pdtanswer" id="pdtanswer1" value="1" checked="checked">
+                <label for="pdtanswer1" id="opa1">对</label>
+                <input type="radio" name="pdtanswer" id="pdtanswer2" value="0">
+                <label for="pdtanswer2" id="opb1">错</label>-->
+                <textarea name="pdtanswer" id="pdtanswer"></textarea>
+
+            </fieldset>
+        </div>
+        <div id="tktctn" class="timuctn">
+            <input type="text" name="tktanswer" id="tktanswer">
+        </div>
+        <div id="wxtkctn" class="timuctn">
+            <label id="opa2"></label>
+            <label id="opb2"></label>
+            <label id="opc2"></label>
+            <label id="opd2"></label>
+            1.<select name="wxtkanswer" id="wxtkanswer1" data-inline="true">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+            </select>
+            2.<select name="wxtkanswer" id="wxtkanswer2" data-inline="true">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+            </select>
+        </div>
+
+        <div id="jdtctn" class="timuctn">
+            <textarea name="jdtanswer" id="jdtanswer"></textarea>
+        </div>
+
+        <!--<div>
+            <label id="daanctn"></label>
+        </div>-->
+
+    </div>
+    <div data-role="footer" data-theme="d" data-position="fixed" style="overflow: hidden;">
+        <h1 id="showname"></h1>
+        <a href="#" id="next" onclick="next();" class="ui-btn ui-btn-right ui-btn-icon-right ui-icon-arrow-r">
+            下一题
+        </a>
+        <!--<a href="#" onclick="pre();" class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-arrow-l">
+            上一题
+        </a>-->
+    </div>
+
+</div>
+<div data-role="page" data-position="fixed" data-theme="d" id="choicedetailpage">
+    <div data-theme="d" data-role="header">
+        <h1 class="ui-title">
+            投票问卷详细
+        </h1>
+        <a href="#" onclick="goback();" class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-back">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <h4 id="ctitle"></h4>
+        <p id="xa"></p>
+        <p id="xb"></p>
+        <p id="xc"></p>
+        <p id="xd"></p>
+    </div>
+
+</div>
+
+<div data-role="page" data-position="fixed" data-theme="d" id="resultpage">
+    <div data-theme="d" data-role="header">
+        <h1 class="ui-title">
+            投票问卷结束
+        </h1>
+        <a href="#" onclick="goback();" class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-back">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <!--<div id="resultdiv" style="width: 100%;font-size: 10px;"></div>
+        <input type="number" id="wenda" placeholder="问答得分">
+        <textarea name="note"  id="note2" cols="30" rows="10"></textarea>-->
+        <button data-theme="d" onclick="tijiao();">确定</button>
+    </div>
+
+</div>
+
+<div data-role="page" data-position="fixed" data-theme="d" id="historypage">
+    <div data-theme="d" data-role="header">
+        <h1 class="ui-title">
+            历史列表
+        </h1>
+        <a href="#" onclick="goback();" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <ul id="historys" data-role="listview" data-filter="true" data-filter-placeholder="输入关键..." data-theme="d" data-inset="true" >
+
+        </ul>
+    </div>
+</div>
+
+<div data-role="page" data-position="fixed" data-theme="d" id="typepage">
+    <div data-theme="d" data-role="header">
+        <h1 class="ui-title">
+            我的投票问卷列表
+        </h1>
+        <a href="#" onclick="toType();" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left">
+            返回
+        </a>
+        <a href="#" onclick="toAddToupiao();" class="ui-btn ui-btn-right ui-icon-plus ui-btn-icon-left">
+            新增
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <ul id="typelist" data-role="listview" data-split-icon="delete" data-filter="true" data-filter-placeholder="输入关键..." data-theme="d" data-inset="true" >
+
+        </ul>
+    </div>
+</div>
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="addtypepage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            新建投票问卷
+        </h1>
+        <a href="#" onclick="goback();" data-icon="back" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-edit ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <form id="typeform">
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    投票问卷标题:
+                </label>
+                <input name="title" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    截止日期:
+                </label>
+                <input name="endtime1" placeholder="" value="" type="date">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    截止时间:
+                </label>
+                <input name="endtime2" placeholder="" value="" type="time">
+            </div>
+        </form>
+        <a href="#" onclick="saveType();" class="ui-btn ui-btn-c">保存</a>
+    </div>
+</div>
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="typedetailpage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            投票问卷信息
+        </h1>
+        <a href="#" onclick="goback();" data-icon="back" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-edit ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <p id="typetitle"></p>
+        <a href="#" onclick="toChooseMg();" class="ui-btn ui-btn-c">管理投票问卷项</a>
+       <!-- <a href="#" onclick="toChooseMg();" class="ui-btn ui-btn-c">查看投票问卷结果</a>-->
+    </div>
+</div>
+
+
+
+<div data-role="page" data-position="fixed" data-theme="d" id="choosepage">
+    <div data-theme="d" data-role="header">
+        <h1 class="ui-title">
+            管理投票问卷问题
+        </h1>
+        <a href="#" onclick="goback();" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left">
+            返回
+        </a>
+        <a href="#" onclick="toAddChoose();" class="ui-btn ui-btn-right ui-icon-plus ui-btn-icon-left">
+            新增
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <ul id="chooselist" data-role="listview" data-split-icon="delete" data-filter="true" data-filter-placeholder="输入关键..." data-theme="d" data-inset="true" >
+
+        </ul>
+    </div>
+</div>
+
+
+
+<div data-role="page" data-theme="d" data-control-title="ChangePasswd" id="addchoosepage">
+    <div data-theme="d" data-role="header" data-position="fixed">
+        <h1 class="ui-title">
+            新增投票问卷问题
+        </h1>
+        <a href="#" onclick="goback();" data-icon="back" data-iconpos="left" class="ui-btn ui-btn-left ui-icon-edit ui-btn-icon-left">
+            返回
+        </a>
+    </div>
+    <div role="main" class="ui-content">
+        <form id="choiceform">
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    标题:
+                </label>
+                <input name="title" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    选项A:
+                </label>
+                <input name="opa" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    选项B:
+                </label>
+                <input name="opb" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    选项c:
+                </label>
+                <input name="opc" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-field-contain" data-controltype="textinput">
+                <label>
+                    选项d:
+                </label>
+                <input name="opd" placeholder="" value="" type="text">
+            </div>
+        </form>
+        <a href="#" onclick="saveChoice();" class="ui-btn ui-btn-c">保存</a>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript" src="../cordova/cordova.js"></script>
+<script type="text/javascript" src="cordovatool/cordovatools.js"></script>
+</html>
